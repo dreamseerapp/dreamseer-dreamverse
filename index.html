@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  </head>
+  <body>
+    <div id="myDiv" style="width: 100%; height: 100%;"></div>
+    <script>
+      fetch('dreamverse_map.json')
+        .then(response => response.json())
+        .then(data => {
+          Plotly.react('myDiv', data.data, data.layout);
+        });
+    </script>
+  </body>
+</html>
