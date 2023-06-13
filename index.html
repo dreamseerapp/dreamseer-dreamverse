@@ -2,6 +2,7 @@
 <html style="height: 100%;">
   <head>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
     <style>
       html, body {
         height: 100%;
@@ -21,8 +22,35 @@
       fetch('dreamverse_map.json')
         .then(response => response.json())
         .then(data => {
+          var myPlot = document.getElementById('myDiv');
           Plotly.react('myDiv', data.data, data.layout, {responsive: true});
+          
+          var hammer = new Hammer(myPlot);
+          hammer.get('pinch').set({ enable: true });
+          hammer.get('rotate').set({ enable: true });
+          
+          var init = {autorange: true, range: [-1, 1]};
+          var update = {autorange: true};
+          
+          function setZoom(scale) {
+              var layoutUpdate = {
+                  'xaxis.range': [init.xaxis.range[0] * scale, init.xaxis.range[1] * scale],
+                  'yaxis.range': [init.yaxis.range[0] * scale, init.yaxis.range[1] * scale]
+              };
+              Plotly.relayout(myPlot, layoutUpdate);
+          }
+          
+          hammer.on('pinch pinchmove', function(ev) {
+              setZoom(ev.scale);
+          });
+
+          hammer.on('rotate rotatemove', function(ev) {
+              var rotation = ev.rotation;
+              // Rotation logic goes here
+              // Plotly does not support rotation directly, you need to implement it by yourself.
+          });
         });
     </script>
   </body>
 </html>
+
