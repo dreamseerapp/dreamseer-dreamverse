@@ -38,11 +38,10 @@
           console.log('Point clicked: ', point);
           if (point && point.data.name in youtube_links) {
             console.log('Redirecting to video: ', youtube_links[point.data.name]);
-            window.open('https://www.youtube.com/watch?v=' + youtube_links[point.data.name], '_blank');
+            window.open('https://youtu.be/' + youtube_links[point.data.name], '_blank');
           }
         });
       });
   </script>
 </body>
 </html>
-
