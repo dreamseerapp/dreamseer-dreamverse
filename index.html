@@ -31,6 +31,11 @@
           layout.modebar.buttons.splice(layout.modebar.buttons.indexOf('zoomOut2d'), 1);
 
           // Enable pinch zooming and touch rotation
+          Plotly.react('myDiv', data.data, layout, {
+            responsive: true,
+            modeBarButtonsToRemove: ['zoom2d', 'pan2d', 'select2d', 'lasso2d', 'autoScale2d', 'resetScale2d', 'hoverClosest3d', 'orbitRotation', 'tableRotation', 'resetCameraDefault3d', 'resetCameraLastSave3d', 'hoverClosestCartesian', 'hoverCompareCartesian', 'toggleSpikelines']
+          });
+
           interact('#myDiv').gesturable({
             onmove: function(event) {
               const scale = 1 + event.ds;
@@ -50,13 +55,8 @@
               });
             }
           });
-
-          // Create the Plotly plot
-          Plotly.newPlot('myDiv', data.data, layout, {
-            responsive: true,
-            modeBarButtonsToRemove: ['zoom2d', 'pan2d', 'select2d', 'lasso2d', 'autoScale2d', 'resetScale2d', 'hoverClosest3d', 'orbitRotation', 'tableRotation', 'resetCameraDefault3d', 'resetCameraLastSave3d', 'hoverClosestCartesian', 'hoverCompareCartesian', 'toggleSpikelines']
-          });
         });
     </script>
   </body>
 </html>
+
