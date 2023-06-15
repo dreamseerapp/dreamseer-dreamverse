@@ -22,12 +22,22 @@
       fetch('dreamverse_map.json')
         .then(response => response.json())
         .then(data => {
-          Plotly.react('myDiv', data.data, data.layout, {
+          Plotly.newPlot('myDiv', data.data, data.layout, {
             responsive: true,
-            modeBarButtonsToRemove: ['zoom2d', 'pan2d', 'select2d', 'lasso2d', 'zoomIn2d', 'zoomOut2d', 'autoScale2d', 'resetScale2d', 'hoverClosest3d', 'orbitRotation', 'tableRotation', 'resetCameraDefault3d', 'resetCameraLastSave3d', 'hoverClosestCartesian', 'hoverCompareCartesian', 'toggleSpikelines']
+            modeBarButtonsToRemove: ['zoom2d', 'pan2d', 'select2d', 'lasso2d', 'zoomIn2d', 'zoomOut2d', 'autoScale2d', 'resetScale2d', 'hoverClosest3d', 'orbitRotation', 'tableRotation', 'resetCameraDefault3d', 'resetCameraLastSave3d', 'hoverClosestCartesian', 'hoverCompareCartesian', 'toggleSpikelines'],
+            scrollZoom: true  // Enable pinch zooming
+          });
+
+          // Enable touch rotation
+          const myDiv = document.getElementById('myDiv');
+          myDiv.on('plotly_touchstart', () => {
+            Plotly.update('myDiv', {
+              'scene.dragmode': 'orbit'  // Enable touch rotation
+            });
           });
         });
     </script>
   </body>
 </html>
+
 
