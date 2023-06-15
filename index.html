@@ -1,47 +1,32 @@
 <!DOCTYPE html>
 <html style="height: 100vh; margin: 0; padding: 0;">
-<head>
-  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-  <style>
-    html, body {
-      height: 100vh;
-      width: 100vw;
-      margin: 0;
-      padding: 0;
-      display: flex;
-    }
+  <head>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+      html, body {
+        height: 100vh;
+        width: 100vw;
+        margin: 0;
+        padding: 0;
+        display: flex;
+      }
 
-    #myDiv {
-      flex: 1;
-    }
-  </style>
-</head>
-<body>
-  <div id="myDiv"></div>
-  <script>
-    var youtube_links = {
-      'COMPLEX': 'EqMbWiuaFAg',
-      'WATER': 'b3JdM-QJoXE'
-    };
-
-    fetch('dreamverse_map.json')
-      .then(response => response.json())
-      .then(data => {
-        Plotly.react('myDiv', data.data, data.layout, {
-          responsive: true,
-          modeBarButtonsToRemove: ['pan2d', 'select2d', 'lasso2d', 'autoScale2d', 'resetScale2d', 'hoverClosest3d', 'orbitRotation', 'tableRotation', 'resetCameraDefault3d', 'resetCameraLastSave3d', 'hoverClosestCartesian', 'hoverCompareCartesian', 'toggleSpikelines']
+      #myDiv {
+        flex: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="myDiv"></div>
+    <script>
+      fetch('dreamverse_map.json')
+        .then(response => response.json())
+        .then(data => {
+          Plotly.react('myDiv', data.data, data.layout, {
+            responsive: true,
+            modeBarButtonsToRemove: ['zoom2d', 'pan2d', 'select2d', 'lasso2d', 'zoomIn2d', 'zoomOut2d', 'autoScale2d', 'resetScale2d', 'hoverClosest3d', 'orbitRotation', 'tableRotation', 'resetCameraDefault3d', 'resetCameraLastSave3d', 'hoverClosestCartesian', 'hoverCompareCartesian', 'toggleSpikelines']
+          });
         });
-
-        var myDiv = document.getElementById('myDiv');
-        myDiv.on('plotly_click', function(data){
-          var point = data.points[0];
-          console.log('Point clicked: ', point);
-          if (point && point.data.name in youtube_links) {
-            console.log('Redirecting to video: ', youtube_links[point.data.name]);
-            window.open('https://youtu.be/' + youtube_links[point.data.name], '_blank');
-          }
-        });
-      });
-  </script>
-</body>
+    </script>
+  </body>
 </html>
