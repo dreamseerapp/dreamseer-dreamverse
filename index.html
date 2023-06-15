@@ -2,7 +2,6 @@
 <html style="height: 100vh; margin: 0; padding: 0;">
   <head>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/interactjs@1.9.11/dist/interact.min.js"></script>
     <style>
       html, body {
         height: 100vh;
@@ -20,44 +19,14 @@
   <body>
     <div id="myDiv"></div>
     <script>
-      // Load the JSON file
       fetch('dreamverse_map.json')
         .then(response => response.json())
         .then(data => {
-          const layout = data.layout;
-
-          // Remove the "Zoom In" and "Zoom Out" buttons from the mode bar
-          layout.modebar.buttons.splice(layout.modebar.buttons.indexOf('zoomIn2d'), 1);
-          layout.modebar.buttons.splice(layout.modebar.buttons.indexOf('zoomOut2d'), 1);
-
-          // Enable pinch zooming and touch rotation
-          Plotly.react('myDiv', data.data, layout, {
+          Plotly.react('myDiv', data.data, data.layout, {
             responsive: true,
-            modeBarButtonsToRemove: ['zoom2d', 'pan2d', 'select2d', 'lasso2d', 'autoScale2d', 'resetScale2d', 'hoverClosest3d', 'orbitRotation', 'tableRotation', 'resetCameraDefault3d', 'resetCameraLastSave3d', 'hoverClosestCartesian', 'hoverCompareCartesian', 'toggleSpikelines']
-          });
-
-          interact('#myDiv').gesturable({
-            onmove: function(event) {
-              const scale = 1 + event.ds;
-              Plotly.relayout('myDiv', {
-                'scene.camera.zoom': scale  // Adjust the zoom level
-              });
-            }
-          });
-
-          interact('#myDiv').draggable({
-            onmove: function(event) {
-              const x = event.dx;
-              const y = event.dy;
-              Plotly.relayout('myDiv', {
-                'scene.camera.eye.x': '-=' + x,  // Adjust the X-axis rotation
-                'scene.camera.eye.y': '+=' + y  // Adjust the Y-axis rotation
-              });
-            }
+            modeBarButtonsToRemove: ['zoom2d', 'pan2d', 'select2d', 'lasso2d', 'zoomIn2d', 'zoomOut2d', 'autoScale2d', 'resetScale2d', 'hoverClosest3d', 'orbitRotation', 'tableRotation', 'resetCameraDefault3d', 'resetCameraLastSave3d', 'hoverClosestCartesian', 'hoverCompareCartesian', 'toggleSpikelines']
           });
         });
     </script>
   </body>
 </html>
-
-
