@@ -35,7 +35,9 @@
           var myDiv = document.getElementById('myDiv');
           myDiv.on('plotly_click', function(data){
             var point = data.points[0];
+            console.log('Point clicked: ', point);
             if (point && point.data.name in youtube_links) {
+              console.log('Redirecting to video: ', youtube_links[point.data.name]);
               window.location.href = 'video.html?videoId=' + youtube_links[point.data.name];
             }
           });
@@ -43,5 +45,9 @@
     </script>
   </body>
 </html>
+
+
+          });
+
 
 
