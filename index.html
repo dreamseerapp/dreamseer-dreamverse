@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html style="height: 100vh; margin: 0; padding: 0;">
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/interactjs@1.9.11/dist/interact.min.js"></script>
     <style>
       html, body {
         height: 100vh;
@@ -30,24 +29,30 @@
           });
 
           // Enable pinch zooming and touch rotation
-          const myDiv = document.getElementById('myDiv');
-          const mc = new Hammer(myDiv);
+          interact('#myDiv').gesturable({
+            onmove: function(event) {
+              const scale = 1 + event.ds;
+              Plotly.relayout('myDiv', {
+                'scene.camera.zoom': scale  // Adjust the zoom level
+              });
+            }
+          });
 
-          // Enable pinch zooming
-          mc.get('pinch').set({ enable: true });
-
-          // Enable touch rotation
-          mc.get('rotate').set({ enable: true });
-
-          myDiv.on('plotly_touchstart', () => {
-            Plotly.update('myDiv', {
-              'scene.dragmode': 'orbit'  // Enable touch rotation
-            });
+          interact('#myDiv').draggable({
+            onmove: function(event) {
+              const x = event.dx;
+              const y = event.dy;
+              Plotly.relayout('myDiv', {
+                'scene.camera.eye.x': '-=' + x,  // Adjust the X-axis rotation
+                'scene.camera.eye.y': '+=' + y  // Adjust the Y-axis rotation
+              });
+            }
           });
         });
     </script>
   </body>
 </html>
+
 
 
 
