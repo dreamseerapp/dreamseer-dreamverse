@@ -23,9 +23,15 @@
       fetch('dreamverse_map.json')
         .then(response => response.json())
         .then(data => {
-          Plotly.newPlot('myDiv', data.data, data.layout, {
+          const layout = data.layout;
+
+          // Remove the "Zoom In" and "Zoom Out" buttons from the mode bar
+          layout.modebar.buttons.splice(layout.modebar.buttons.indexOf('zoomIn2d'), 1);
+          layout.modebar.buttons.splice(layout.modebar.buttons.indexOf('zoomOut2d'), 1);
+
+          Plotly.newPlot('myDiv', data.data, layout, {
             responsive: true,
-            modeBarButtonsToRemove: ['zoom2d', 'pan2d', 'select2d', 'lasso2d', 'zoomIn2d', 'zoomOut2d', 'autoScale2d', 'resetScale2d', 'hoverClosest3d', 'orbitRotation', 'tableRotation', 'resetCameraDefault3d', 'resetCameraLastSave3d', 'hoverClosestCartesian', 'hoverCompareCartesian', 'toggleSpikelines']
+            modeBarButtonsToRemove: ['zoom2d', 'pan2d', 'select2d', 'lasso2d', 'autoScale2d', 'resetScale2d', 'hoverClosest3d', 'orbitRotation', 'tableRotation', 'resetCameraDefault3d', 'resetCameraLastSave3d', 'hoverClosestCartesian', 'hoverCompareCartesian', 'toggleSpikelines']
           });
 
           // Enable pinch zooming and touch rotation
@@ -52,6 +58,7 @@
     </script>
   </body>
 </html>
+
 
 
 
