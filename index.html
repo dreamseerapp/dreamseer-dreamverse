@@ -2,6 +2,7 @@
 <html style="height: 100vh; margin: 0; padding: 0;">
   <head>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
     <style>
       html, body {
         height: 100vh;
@@ -24,12 +25,19 @@
         .then(data => {
           Plotly.newPlot('myDiv', data.data, data.layout, {
             responsive: true,
-            modeBarButtonsToRemove: ['zoom2d', 'pan2d', 'select2d', 'lasso2d', 'zoomIn2d', 'zoomOut2d', 'autoScale2d', 'resetScale2d', 'hoverClosest3d', 'orbitRotation', 'tableRotation', 'resetCameraDefault3d', 'resetCameraLastSave3d', 'hoverClosestCartesian', 'hoverCompareCartesian', 'toggleSpikelines'],
-            scrollZoom: true  // Enable pinch zooming
+            modeBarButtonsToRemove: ['zoom2d', 'pan2d', 'select2d', 'lasso2d', 'zoomIn2d', 'zoomOut2d', 'autoScale2d', 'resetScale2d', 'hoverClosest3d', 'orbitRotation', 'tableRotation', 'resetCameraDefault3d', 'resetCameraLastSave3d', 'hoverClosestCartesian', 'hoverCompareCartesian', 'toggleSpikelines']
           });
 
-          // Enable touch rotation
+          // Enable pinch zooming and touch rotation
           const myDiv = document.getElementById('myDiv');
+          const mc = new Hammer(myDiv);
+
+          // Enable pinch zooming
+          mc.get('pinch').set({ enable: true });
+
+          // Enable touch rotation
+          mc.get('rotate').set({ enable: true });
+
           myDiv.on('plotly_touchstart', () => {
             Plotly.update('myDiv', {
               'scene.dragmode': 'orbit'  // Enable touch rotation
@@ -39,5 +47,6 @@
     </script>
   </body>
 </html>
+
 
 
