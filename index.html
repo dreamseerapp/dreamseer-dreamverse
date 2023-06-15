@@ -26,7 +26,16 @@
             responsive: true,
             modeBarButtonsToRemove: ['pan2d', 'select2d', 'lasso2d', 'autoScale2d', 'resetScale2d', 'hoverClosest3d', 'orbitRotation', 'tableRotation', 'resetCameraDefault3d', 'resetCameraLastSave3d', 'hoverClosestCartesian', 'hoverCompareCartesian', 'toggleSpikelines']
           });
+
+          var myDiv = document.getElementById('myDiv');
+          myDiv.on('plotly_click', function(data){
+            var point = data.points[0];
+            if (point && point.data.name in youtube_links) {
+              window.location.href = 'video.html?videoId=' + youtube_links[point.data.name];
+            }
+          });
         });
     </script>
   </body>
 </html>
+
