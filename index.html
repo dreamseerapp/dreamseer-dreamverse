@@ -16,13 +16,14 @@
       }
 
       #myDiv {
-        flex-grow: 3; /* This is changed to allow #myDiv to take up more space */
+        flex-grow: 1;
       }
 
       .story {
-        flex-grow: 1;
+        height: 40%; /* Set an absolute height */
         padding: 20px;
         background-color: rgba(0,0,0,0.7);
+        overflow: auto; /* Add a scrollbar if the text overflows */
       }
     </style>
   </head>
