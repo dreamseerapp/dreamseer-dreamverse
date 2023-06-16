@@ -23,24 +23,86 @@
         padding: 20px;
         background-color: rgba(0,0,0,0.7);
       }
+
+      .video-popup {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.4);
+      }
+
+      .video-popup .close-button {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+
+      .video-popup .close-button:hover,
+      .video-popup .close-button:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+      }
     </style>
   </head>
   <body>
     <div class="story">
-        <h1>Welcome to the Dreamverse, Seer!</h1>
-        <p>You stand at the edge of the unexplored territory, a realm where dreams shape reality. Embark on a journey of self-discovery that begins today and grows with you.</p>
-        <p>Explore the map below, a reflection of our collective mind's evolution. Each color represents intertwined themes within our shared dream realm. This map will guide your voyage, helping to unravel secrets and wisdom hidden in the collective unconscious. Let your journey begin. Happy explorations!</p>        
+      <h1>Welcome to the Dreamverse, Seer!</h1>
+      <p>You stand at the edge of the unexplored territory, a realm where dreams shape reality. Embark on a journey of self-discovery that begins today and grows with you.</p>
+      <p>Explore the map below, a reflection of our collective mind's evolution. Each color represents intertwined themes within our shared dream realm. This map will guide your voyage, helping to unravel secrets and wisdom hidden in the collective unconscious. Let your journey begin. Happy explorations!</p>        
     </div>
+    
     <div id="myDiv"></div>
+
+    <!-- Add this new div -->
+    <div id="videoPopup" class="video-popup">
+      <span id="closeButton" class="close-button">&times;</span>
+      <h2 id="videoTitle"></h2>
+      <iframe id="videoFrame" width="560" height="315" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
     <script>
       fetch('dreamverse_map.json')
         .then(response => response.json())
         .then(data => {
+          data.data.forEach(function(trace) {
+            if (trace.type === 'scatter3d') {
+              trace.customdata = trace.customdata.map(function(datum) {
+                return [datum, trace.text];
+              });
+            }
+          });
+
           Plotly.react('myDiv', data.data, data.layout, {
             responsive: true,
             modeBarButtonsToRemove: ['pan2d', 'select2d', 'lasso2d', 'autoScale2d', 'resetScale2d', 'hoverClosest3d', 'orbitRotation', 'tableRotation', 'resetCameraDefault3d', 'resetCameraLastSave3d', 'hoverClosestCartesian', 'hoverCompareCartesian', 'toggleSpikelines']
           });
+
+          // Add this new JavaScript
+          document.getElementById('myDiv').on('plotly_click', function(data){
+            if (data.points.length > 0) {
+              var customData = data.points[0].customdata;
+              var videoLink = customData[0];
+              var title = customData[1];
+              if (videoLink) {
+                document.getElementById('videoFrame').src = videoLink;
+                document.getElementById('videoTitle').innerText = title;
+                document.getElementById('videoPopup').style.display = "block";
+              }
+            }
+          });
         });
+
+      document.getElementById('closeButton').onclick = function() {
+        document.getElementById('videoPopup').style.display = "none";
+        document.getElementById('videoFrame').src = "";
+      };
     </script>
   </body>
 </html>
+
