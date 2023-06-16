@@ -9,14 +9,35 @@
         margin: 0;
         padding: 0;
         display: flex;
+        flex-direction: column;
+        background-color: #000;
+        color: #fff;
+        font-family: Arial, sans-serif;
       }
 
       #myDiv {
         flex: 1;
       }
+
+      .story {
+        padding: 20px;
+        background-color: rgba(0,0,0,0.7);
+      }
     </style>
   </head>
   <body>
+    <div class="story">
+      <h1>Dreamverse: Prelude</h1>
+      <p>Welcome, Seer!</p>
+
+      <p>You stand at the edge of a universe unexplored, the vast expanse of the Dreamverse. It is a realm where the intangible takes form, where dreams weave the fabric of reality. You are no mere bystander but a pioneer on a thrilling journey of discovery. You are a Seer, an explorer of inner realms, a warrior of wisdom.</p>
+
+      <p>Your voyage begins here, on this day, but know that this is just the starting point. As you grow and evolve, so too will the Dreamverse. It is not merely a map; it is a reflection of our collective mind's evolution, a visual chronicle of our growth and spiritual awakening.</p>
+
+      <p>Below you behold the guide to your mystical journey, a 3D map of the Dreamverse. Each vibrant color represents different themes of dreams, their proximity denoting how interlinked they are within our shared realm. It’s a complex web of thoughts, emotions, fears, and hopes, all painting a picture of the unique universe that is our mind.</p>
+
+      <p>Use this map to chart your course through the Dreamverse. Unravel its enigmas, decipher its symbols, delve into its depths. Your voyage of self-discovery starts here, and with every dream, every journey, you will unlock secrets, wisdom that has lain dormant within the collective unconscious. Let the journey begin, Seer. Let the exploration commence. Happy explorations!</p>
+    </div>
     <div id="myDiv"></div>
     <script>
       fetch('dreamverse_map.json')
